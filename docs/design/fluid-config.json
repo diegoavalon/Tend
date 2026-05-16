@@ -1,0 +1,21 @@
+{
+  "minVP": 375,
+  "maxVP": 1280,
+  "base": 16,
+  "typography": {
+    "headline-lg": { "min": 46, "max": 65 },
+    "headline-md": { "min": 34, "max": 48 },
+    "headline-sm": { "min": 22, "max": 32 },
+    "body-lg": { "min": 20, "max": 24 },
+    "body-md": { "min": 15, "max": 16 },
+    "body-sm": { "min": 13, "max": 14 },
+    "label-lg": { "min": 18, "max": 20 },
+    "label-md": { "min": 14, "max": 15 },
+    "label-sm": { "min": 12, "max": 13 },
+    "caption": { "min": 10, "max": 11 }
+  },
+  "spacing": {
+    "lg": { "min": 32, "max": 48 },
+    "xl": { "min": 48, "max": 80 }
+  }
+}

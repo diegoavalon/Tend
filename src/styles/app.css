@@ -133,7 +133,28 @@
   .tier .meta {
     @apply whitespace-nowrap text-right font-body text-[13px] leading-[1.5] text-ink-muted;
   }
+  .topbar .summary {
+    @apply flex flex-col items-end gap-2;
+  }
+  .topbar .summary-top {
+    @apply flex items-center gap-3;
+  }
   .topbar .summary strong { @apply font-bold text-ink; }
+
+  .theme-switch {
+    @apply inline-flex rounded-full border border-line bg-panel-tint-soft p-[2px];
+  }
+
+  .theme-switch button {
+    @apply cursor-pointer rounded-full border-0 bg-transparent px-3 py-[7px] font-body text-[11px] font-bold uppercase leading-none tracking-[0.06em] text-ink-dim;
+    transition:
+      background-color var(--tend-duration) var(--tend-ease),
+      color var(--tend-duration) var(--tend-ease);
+  }
+
+  .theme-switch button.is-active {
+    @apply bg-panel text-ink;
+  }
 
   .section { @apply mb-8; }
 
@@ -492,53 +513,6 @@
   @keyframes pop {
     from { transform: translate(-50%, 10px); opacity: 0; }
     to { transform: translate(-50%, 0); opacity: 1; }
-  }
-
-  .tweaks-panel {
-    @apply fixed bottom-4 right-4 z-[60] w-[min(280px,calc(100vw-32px))] rounded-[16px];
-    color: #14140f;
-    background: rgba(244, 241, 234, 0.84);
-    border: 1px solid rgba(255, 255, 255, 0.65);
-    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.4) inset, 0 12px 40px rgba(0, 0, 0, 0.18);
-    backdrop-filter: blur(24px) saturate(160%);
-    -webkit-backdrop-filter: blur(24px) saturate(160%);
-  }
-
-  .tweaks-head {
-    @apply flex items-center justify-between border-b px-[14px] pb-[10px] pt-3;
-    border-color: rgba(20, 20, 15, 0.08);
-  }
-  .tweaks-head strong { @apply font-body text-[12px] font-semibold leading-none tracking-[0.01em]; }
-  .tweaks-head span { @apply font-body text-[11px] font-medium leading-none text-[rgba(20,20,15,0.55)]; }
-  .tweaks-body { @apply flex flex-col gap-3 px-[14px] pb-[14px] pt-3; }
-  .tweaks-section { @apply flex flex-col gap-[10px]; }
-  .tweaks-section-label { @apply font-body text-[10px] font-bold uppercase tracking-[0.08em] text-[rgba(20,20,15,0.5)]; }
-  .tweaks-field { @apply flex flex-col gap-[6px]; }
-  .tweaks-field-inline { @apply flex-row items-center justify-between gap-3; }
-  .tweaks-label-row { @apply flex items-baseline justify-between gap-2; }
-  .tweaks-label { @apply font-body text-[11.5px] font-medium leading-[1.4] text-[rgba(20,20,15,0.76)]; }
-  .tweaks-value { @apply font-body text-[11px] font-medium capitalize leading-none text-[rgba(20,20,15,0.48)]; }
-  .tweaks-seg { @apply flex rounded-[10px] bg-[rgba(20,20,15,0.08)] p-[2px]; }
-  .tweaks-seg button { @apply flex-1 cursor-pointer rounded-[8px] border-0 bg-transparent px-2 py-[7px] font-body text-[11px] font-semibold capitalize leading-[1.2] text-[rgba(20,20,15,0.72)]; }
-  .tweaks-seg button.is-active {
-    @apply text-[#14140f];
-    background: rgba(255,255,255,0.92);
-    box-shadow: 0 1px 2px rgba(0,0,0,0.12);
-  }
-  .tweaks-toggle {
-    @apply relative size-auto h-5 w-[34px] cursor-pointer rounded-full border-0 bg-[rgba(20,20,15,0.18)] p-0;
-    transition: background-color var(--tend-duration) var(--tend-ease);
-  }
-  .tweaks-toggle span {
-    @apply absolute left-[2px] top-[2px] size-4 rounded-full bg-white;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
-    transition: transform var(--tend-duration) var(--tend-ease);
-  }
-  .tweaks-toggle.is-on { @apply bg-primary; }
-  .tweaks-toggle.is-on span { transform: translateX(14px); }
-
-  @media (max-width: 820px) {
-    .tweaks-panel { @apply left-4 right-4 w-auto; }
   }
 
   .screen-head .left .crumbs {

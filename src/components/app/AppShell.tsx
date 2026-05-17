@@ -43,7 +43,7 @@ export function AppShell({ active, children }: Props) {
   };
 
   return (
-    <div className="app surface-dark">
+    <div className="app surface-dark density-compact">
       <Sidebar active={active} overdueCount={TEND_DATA.overdue.length} onNew={() => setModalOpen(true)} />
       {children}
 

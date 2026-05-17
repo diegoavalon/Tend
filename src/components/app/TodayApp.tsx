@@ -9,10 +9,8 @@ import { ComingUpSection } from "./ComingUpSection";
 import { EmptyState } from "./EmptyState";
 import { NewBatchModal } from "./NewBatchModal";
 import { Icon } from "./Icons";
-import { TweaksPanel } from "./TweaksPanel";
 
 type Palette = "dark" | "cream";
-type Density = "compact" | "regular" | "comfy";
 
 type CounterState = "done" | "open" | "missed";
 
@@ -89,8 +87,6 @@ function cloneOverdue(): OverdueItem[] {
 
 export function TodayApp() {
   const [palette, setPalette] = useState<Palette>("dark");
-  const [density, setDensity] = useState<Density>("regular");
-  const [showProgress, setShowProgress] = useState(true);
   const [batches, setBatches] = useState<BatchState[]>(cloneBatches);
   const [overdue, setOverdue] = useState<OverdueItem[]>(cloneOverdue);
   const [modalOpen, setModalOpen] = useState(false);
@@ -179,11 +175,11 @@ export function TodayApp() {
   );
 
   return (
-    <div className={`app surface-${palette} density-${density}`}>
+    <div className={`app surface-${palette} density-compact`}>
       <Sidebar active="today" overdueCount={overdue.length} onNew={() => setModalOpen(true)} />
 
       <main className="main">
-        <TopBar dueToday={totalToday} overdue={overdue.length} />
+        <TopBar dueToday={totalToday} overdue={overdue.length} palette={palette} onPaletteChange={setPalette} />
 
         <OverdueSection items={overdue} onAct={clearOverdue} />
 
@@ -202,7 +198,7 @@ export function TodayApp() {
                 <BatchCard
                   key={b.id}
                   batch={b}
-                  showProgress={showProgress}
+                  showProgress
                   onToggleTask={toggleTask}
                   onTickCounter={tickCounter}
                   onRecord={recordObservation}
@@ -229,15 +225,6 @@ export function TodayApp() {
           {toast}
         </div>
       )}
-
-      <TweaksPanel
-        palette={palette}
-        density={density}
-        showProgress={showProgress}
-        onPaletteChange={setPalette}
-        onDensityChange={setDensity}
-        onShowProgressChange={setShowProgress}
-      />
     </div>
   );
 }

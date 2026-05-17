@@ -5,7 +5,7 @@ export function LandingHero() {
     <section className="hero" id="top">
       <LandingNav />
       <div className="container hero-inner">
-        <div className="eyebrow"><span className="dot" />For homesteaders running 5+ batches at once</div>
+        <div className="eyebrow eyebrow-inverse"><span className="dot" />For homesteaders running 5+ batches at once</div>
         <h1 className="h-display">
           Stop forgetting what to <span className="pixel">rinse</span>,{" "}
           <span className="green-word">palpate</span>, or transplant today.

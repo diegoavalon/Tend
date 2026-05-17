@@ -54,7 +54,7 @@ export function SettingsPage() {
                   <div className="label">Email</div>
                   <div className="hint">Magic-link sign-in. Used for the daily digest too.</div>
                 </div>
-                <input className="input-flat" defaultValue="diego@avalon.farm" style={{ minWidth: 220 }} />
+                <input className="input-flat input-wide" defaultValue="diego@avalon.farm" />
               </div>
               <div className="setting-row">
                 <div>
@@ -83,7 +83,7 @@ export function SettingsPage() {
             <section className="panel">
               <h2><Icon name="clock" size={16} />Window times</h2>
               <div className="panel-sub">Sub-daily counters fire at these clock times. Set once — every template uses them.</div>
-              <div className="setting-row" style={{ gridTemplateColumns: "1fr auto" }}>
+              <div className="setting-row setting-row-wide">
                 <div>
                   <div className="label">Morning · midday · evening</div>
                   <div className="hint">The three semantic windows every sub-daily task references.</div>
@@ -120,7 +120,7 @@ export function SettingsPage() {
                   <div className="label">Tomorrow&apos;s heads-up</div>
                   <div className="hint">Include a short "tomorrow" section below today&apos;s list.</div>
                 </div>
-                <label className="input-flat" style={{ display: "inline-flex", gap: 8, alignItems: "center", cursor: "pointer" }}>
+                <label className="input-flat input-toggle">
                   <input
                     type="checkbox"
                     checked={tomorrowHeadsUp}
@@ -144,10 +144,10 @@ export function SettingsPage() {
                 <code>{FEED_URL}</code>
                 <button type="button" onClick={() => { void copyFeed(); }}>{copied ? "Copied ✓" : "Copy"}</button>
               </div>
-              <div className="panel-sub" style={{ marginTop: 4 }}>
+              <div className="panel-sub panel-sub-note">
                 Treat this URL as a password. If it leaks, regenerate it.
               </div>
-              <button type="button" className="btn-secondary" style={{ alignSelf: "flex-start" }}>Regenerate feed token</button>
+              <button type="button" className="btn-secondary btn-align-start">Regenerate feed token</button>
             </section>
 
             <section className="panel">
@@ -156,21 +156,20 @@ export function SettingsPage() {
                 We sign you in with a magic link sent to your email. Sessions stay
                 long-lived on each device until you sign out.
               </div>
-              <button type="button" className="btn-secondary" style={{ alignSelf: "flex-start" }}>
+              <button type="button" className="btn-secondary btn-align-start">
                 <Icon name="log-out" size={14} /> Sign out of this device
               </button>
             </section>
 
-            <section className="panel" style={{ borderColor: "var(--tend-danger-border)", borderStyle: "solid", borderWidth: 1, background: "var(--tend-danger-softer)" }}>
-              <h2 style={{ color: "var(--tend-danger)" }}><Icon name="alert-triangle" size={16} />Danger zone</h2>
+            <section className="panel panel-danger">
+              <h2 className="panel-danger-title"><Icon name="alert-triangle" size={16} />Danger zone</h2>
               <div className="panel-sub">
                 Deleting your account removes every batch, observation, and the
                 calendar feed token. Archived batches go with it. Can&apos;t be undone.
               </div>
               <button
                 type="button"
-                className="btn-secondary"
-                style={{ alignSelf: "flex-start", color: "var(--tend-danger)", borderColor: "var(--tend-danger-border)" }}
+                className="btn-secondary btn-align-start btn-danger-secondary"
               >
                 Delete account
               </button>

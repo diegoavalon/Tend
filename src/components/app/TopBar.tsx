@@ -22,7 +22,7 @@ export function TopBar({ dueToday = 0, overdue = 0 }: Props) {
       </div>
       <div className="summary">
         <div><strong>{overdue}</strong> overdue · <strong>{dueToday}</strong> today</div>
-        <div style={{ color: "var(--tend-fg-3)", marginTop: 4 }}>Digest sent 07:30</div>
+        <div className="summary-note">Digest sent 07:30</div>
       </div>
     </header>
   );

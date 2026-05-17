@@ -26,7 +26,7 @@ export function CounterRow({ row, onTick }: Props) {
         <Icon name="repeat" size={14} />
       </span>
       <div className="counter-wrap">
-        <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+        <div className="counter-head">
           <span className="counter">
             {row.counters.map((c, i) => (
               <button
@@ -41,11 +41,11 @@ export function CounterRow({ row, onTick }: Props) {
             ))}
           </span>
           <span className="row-title">{row.title}</span>
-          <span className="row-sub" style={{ marginLeft: "auto", fontWeight: 700, letterSpacing: "0.04em", textTransform: "uppercase" }}>
+          <span className="counter-total">
             {done}/{total}
           </span>
         </div>
-        <div className="row-sub" style={{ marginLeft: 0 }}>{row.sub}</div>
+        <div className="row-sub counter-sub">{row.sub}</div>
       </div>
     </div>
   );

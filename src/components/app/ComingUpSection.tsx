@@ -31,7 +31,7 @@ export function ComingUpSection({ days }: Props) {
             <div key={i} className="coming-day">
               <div className="when">
                 <strong>{d.when}</strong>
-                <div style={{ color: "var(--tend-fg-3)", fontWeight: 500, marginTop: 2, letterSpacing: 0, textTransform: "none" }}>{d.dateLabel}</div>
+                <div className="when-date">{d.dateLabel}</div>
               </div>
               <div className="items">
                 {d.items.map((it, j) => {

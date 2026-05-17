@@ -107,13 +107,13 @@ export function BatchDetailPage() {
             <div className="crumbs">
               <a href="/app">Today</a>
               <Icon name="chevron-right" size={11} />
-              <span style={{ color: "var(--tend-fg-3)" }}>Batches</span>
+              <span className="crumb-muted">Batches</span>
               <Icon name="chevron-right" size={11} />
               <span>{batch.name}</span>
             </div>
             <h1>{batch.name}</h1>
             <div className="meta">
-              <span style={{ color: "var(--tend-primary)", fontWeight: 700, letterSpacing: "0.04em", textTransform: "uppercase", fontSize: 12 }}>
+              <span className="meta-accent">
                 {batch.stage}
               </span>
               <span> · {batch.template} · {batch.dayInfo}</span>
@@ -144,7 +144,7 @@ export function BatchDetailPage() {
 
         <div className="col-pair">
           <div>
-            <section className="section" style={{ marginTop: 0 }}>
+            <section className="section section-start">
               <div className="section-head">
                 <Icon name="sun" size={14} />
                 <span className="label">Today on this batch</span>
@@ -209,8 +209,7 @@ export function BatchDetailPage() {
               {OBSERVATIONS.map((item, index) => (
                 <div
                   key={index}
-                  className="history-item is-observation"
-                  style={{ borderTop: index > 0 ? "1px solid var(--tend-tint-soft)" : "none" }}
+                  className={"history-item is-observation" + (index === 0 ? " history-item-first" : "")}
                 >
                   <span className="icon"><Icon name="eye" size={14} /></span>
                   <div>

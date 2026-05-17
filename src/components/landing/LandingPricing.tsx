@@ -36,7 +36,7 @@ export function LandingPricing() {
     <section className="pricing surface-green" id="pricing">
       <div className="container">
         <div className="head">
-          <div className="eyebrow" style={{ color: "rgba(255,255,255,0.75)" }}><span className="dot" style={{ background: "#fff" }} />Pricing</div>
+          <div className="eyebrow eyebrow-inverse"><span className="dot" />Pricing</div>
           <h2 className="h-section">
             One plan for the <span className="pixel">small</span> homestead, one for the rest.
           </h2>

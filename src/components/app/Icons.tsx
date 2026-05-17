@@ -13,9 +13,5 @@ export function Icon({ name, size = 16, strokeWidth = 1.75 }: { name: string; si
   }
   const Comp = nameToComponent[key];
   if (!Comp) return null;
-  return (
-    <span style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", width: size, height: size, lineHeight: 1 }}>
-      <Comp size={size} strokeWidth={strokeWidth} aria-hidden="true" />
-    </span>
-  );
+  return <Comp size={size} strokeWidth={strokeWidth} aria-hidden="true" className="icon-glyph" />;
 }

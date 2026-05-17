@@ -19,6 +19,8 @@ interface Props {
 }
 
 export function BatchCard({ batch, showProgress = true, onToggleTask, onTickCounter, onRecord }: Props) {
+  const progressPercent = Math.min(100, Math.round((batch.progress || 0) * 100));
+
   return (
     <article className="batch-card" data-batch-id={batch.id}>
       <div className="head">
@@ -36,7 +38,7 @@ export function BatchCard({ batch, showProgress = true, onToggleTask, onTickCoun
 
       {showProgress && (
         <div className="progress" aria-hidden="true">
-          <div className="bar" style={{ width: `${Math.min(100, Math.round((batch.progress || 0) * 100))}%` }} />
+          <progress className="progress-meter" value={progressPercent} max={100} />
         </div>
       )}
 

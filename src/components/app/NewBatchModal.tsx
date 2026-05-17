@@ -35,9 +35,9 @@ export function NewBatchModal({ templates, onClose, onCreate }: Props) {
   return (
     <div className="modal-backdrop" onClick={onClose}>
       <form className="modal" onClick={(e) => e.stopPropagation()} onSubmit={submit}>
-        <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-          <h2 style={{ flex: 1 }}>New batch</h2>
-          <button type="button" className="btn-secondary" onClick={onClose} aria-label="Close" style={{ padding: "8px 12px" }}>
+        <div className="modal-head">
+          <h2 className="modal-title">New batch</h2>
+          <button type="button" className="btn-secondary modal-close" onClick={onClose} aria-label="Close">
             <Icon name="x" size={14} />
           </button>
         </div>
@@ -59,14 +59,14 @@ export function NewBatchModal({ templates, onClose, onCreate }: Props) {
           <div className="params-grid">
             {Object.entries(params).map(([k, v]) => (
               <div key={k}>
-                <label style={{ marginBottom: 6 }}>{k.replace(/_/g, " ")}</label>
+                <label className="label-inline">{k.replace(/_/g, " ")}</label>
                 <input value={v} onChange={(e) => setParams({ ...params, [k]: e.target.value })} />
               </div>
             ))}
           </div>
         </div>
 
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
+        <div className="form-grid-2">
           <div>
             <label>3 · Start date</label>
             <input type="date" value={start} onChange={(e) => setStart(e.target.value)} />

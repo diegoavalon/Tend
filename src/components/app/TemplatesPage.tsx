@@ -113,7 +113,7 @@ export function TemplatesPage() {
           </div>
         </header>
 
-        <div className="col-pair" style={{ alignItems: "flex-start" }}>
+        <div className="col-pair col-pair-top">
           <div className="tpl-grid">
             {TEMPLATE_LIBRARY.map((template) => (
               <button
@@ -124,7 +124,7 @@ export function TemplatesPage() {
               >
                 <div className="top">
                   <span className="swatch"><Icon name={template.icon} size={20} /></span>
-                  <div style={{ textAlign: "left" }}>
+                  <div className="text-left">
                     <div className="name">{template.name}</div>
                     <div className="blurb">{template.blurb}</div>
                   </div>
@@ -141,8 +141,8 @@ export function TemplatesPage() {
               <h2><Icon name="book-open" size={16} />{picked.name}</h2>
               <div className="panel-sub">{picked.blurb}</div>
 
-              <div style={{ marginTop: 6 }}>
-                <div className="archive-month-head" style={{ marginBottom: 8 }}>Stages</div>
+              <div className="stack-gap-sm">
+                <div className="archive-month-head section-kicker">Stages</div>
                 <div className="stage-timeline">
                   {picked.stages.map((stage, index) => (
                     <div key={stage} className={"stage-pill " + (index === 0 ? "current" : "")}>
@@ -152,20 +152,20 @@ export function TemplatesPage() {
                 </div>
               </div>
 
-              <div style={{ marginTop: 8 }}>
-                <div className="archive-month-head" style={{ marginBottom: 8 }}>Events</div>
-                <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: 8 }}>
+              <div className="stack-gap-md">
+                <div className="archive-month-head section-kicker">Events</div>
+                <ul className="event-list">
                   {picked.events.map((event, index) => (
-                    <li key={index} style={{ display: "flex", alignItems: "flex-start", gap: 10, font: "500 13px/1.4 var(--tend-font-body)", color: "var(--tend-fg-2)" }}>
-                      <span style={{ color: "var(--tend-primary)", flex: "0 0 auto", marginTop: 2 }}><Icon name={event.icon} size={14} /></span>
+                    <li key={index} className="event-item">
+                      <span className="event-icon"><Icon name={event.icon} size={14} /></span>
                       <span>{event.label}</span>
                     </li>
                   ))}
                 </ul>
               </div>
 
-              <div style={{ marginTop: 8 }}>
-                <div className="archive-month-head" style={{ marginBottom: 8 }}>Default parameters</div>
+              <div className="stack-gap-md">
+                <div className="archive-month-head section-kicker">Default parameters</div>
                 {Object.entries(picked.params).map(([key, value]) => (
                   <div key={key} className="kv-row">
                     <span className="k">{key.replace(/_/g, " ")}</span>
@@ -174,7 +174,7 @@ export function TemplatesPage() {
                 ))}
               </div>
 
-              <button type="button" className="btn-primary" style={{ marginTop: 6, alignSelf: "flex-start" }}>
+              <button type="button" className="btn-primary btn-align-start btn-offset-top">
                 Start a batch with this template →
               </button>
             </div>

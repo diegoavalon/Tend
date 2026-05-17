@@ -81,7 +81,7 @@ export function ArchivePage() {
                   </div>
                   <div className="range">
                     {row.range}
-                    <div style={{ color: "var(--tend-fg-3)", marginTop: 2 }}>{row.yield}</div>
+                    <div className="archive-yield">{row.yield}</div>
                   </div>
                   <span className={"status-pill " + row.status}>{row.status}</span>
                   <Icon name="chevron-right" size={16} />

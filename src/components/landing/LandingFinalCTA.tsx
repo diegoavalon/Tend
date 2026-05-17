@@ -2,7 +2,7 @@ export function LandingFinalCTA() {
   return (
     <section className="final" id="get-started">
       <div className="container">
-        <div className="eyebrow" style={{ color: "var(--tend-primary)" }}><span className="dot" />Get started</div>
+        <div className="eyebrow eyebrow-primary"><span className="dot" />Get started</div>
         <h2 className="h-section">
           One screen for everything <span className="pixel">growing</span> on your land.
         </h2>

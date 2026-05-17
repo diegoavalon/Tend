@@ -97,12 +97,8 @@ export function Sidebar({ active = "today", overdueCount = 0, onNew }: Props) {
       <div className="who">
         <span className="avatar">D</span>
         <div>
-          <div style={{ color: "var(--tend-fg-1)", fontWeight: 600 }}>
-            Diego
-          </div>
-          <div style={{ fontSize: 11, color: "var(--tend-fg-3)" }}>
-            America/New_York
-          </div>
+          <div className="profile-name">Diego</div>
+          <div className="profile-meta">America/New_York</div>
         </div>
       </div>
     </aside>

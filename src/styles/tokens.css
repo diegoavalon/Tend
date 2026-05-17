@@ -1,276 +1,167 @@
-/* ============================================================
-   Tend — Colors & Type
-   ------------------------------------------------------------
-   Tokens extracted from the Tend codebase (diegoavalon/Tend
-   `theme.css`) plus its companion design notes. Source: a
-   2025-03-17 backup of see.design captured via the
-   `design-extractor` skill — used here as Tend's starting
-   visual foundation. Fonts are loaded from Google Fonts
-   (Outfit, Inter, Pixelify Sans) — drop replacement WOFF2
-   files into ./fonts/ and update the @font-face blocks if
-   you want to self-host.
-   ============================================================ */
+/* Tend theme tokens and semantic surfaces for Tailwind v4. */
 
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700&family=Outfit:wght@500;600;700;800&family=Pixelify+Sans:wght@700&display=swap");
+@theme {
+  --font-body: "Inter", system-ui, sans-serif;
+  --font-display: "Outfit", system-ui, sans-serif;
+  --font-accent: "Pixelify Sans", "Outfit", sans-serif;
+
+  --text-headline-lg: clamp(2.875rem, 2.3829rem + 2.0994vw, 4.0625rem);
+  --text-headline-md: clamp(2.125rem, 1.7624rem + 1.547vw, 3rem);
+  --text-headline-sm: clamp(1.375rem, 1.116rem + 1.105vw, 2rem);
+  --text-body-lg: clamp(1.25rem, 1.1464rem + 0.442vw, 1.5rem);
+  --text-body-md: clamp(0.9375rem, 0.9116rem + 0.1105vw, 1rem);
+  --text-body-sm: clamp(0.8125rem, 0.7866rem + 0.1105vw, 0.875rem);
+  --text-label-lg: clamp(1.125rem, 1.0732rem + 0.221vw, 1.25rem);
+  --text-label-md: clamp(0.875rem, 0.8491rem + 0.1105vw, 0.9375rem);
+  --text-label-sm: clamp(0.75rem, 0.7241rem + 0.1105vw, 0.8125rem);
+  --text-caption: clamp(0.625rem, 0.5991rem + 0.1105vw, 0.6875rem);
+
+  --color-primary: var(--tend-primary);
+  --color-primary-press: var(--tend-primary-press);
+  --color-secondary: var(--tend-secondary);
+  --color-tertiary: var(--tend-tertiary);
+  --color-accent: var(--tend-accent);
+  --color-focus: var(--tend-focus);
+  --color-danger: var(--tend-danger);
+  --color-danger-press: var(--tend-danger-press);
+  --color-danger-soft: var(--tend-danger-soft);
+  --color-danger-softer: var(--tend-danger-softer);
+  --color-danger-border: var(--tend-danger-border);
+
+  --color-surface: var(--tend-bg-1);
+  --color-panel: var(--tend-bg-2);
+  --color-elevated: var(--tend-elevated-bg);
+  --color-sidebar: var(--tend-sidebar-bg);
+  --color-surface-alt: var(--tend-surface-2);
+
+  --color-ink: var(--tend-fg-1);
+  --color-ink-muted: var(--tend-fg-2);
+  --color-ink-dim: var(--tend-fg-3);
+
+  --color-line: var(--tend-hairline-local);
+  --color-line-strong: var(--tend-hairline-local-strong);
+  --color-panel-tint-soft: var(--tend-tint-soft);
+  --color-panel-tint: var(--tend-tint);
+  --color-panel-tint-strong: var(--tend-tint-strong);
+
+  --color-dark-1: var(--tend-dark-1);
+  --color-dark-2: var(--tend-dark-2);
+  --color-dark-3: var(--tend-dark-3);
+  --color-cream-1: var(--tend-cream-1);
+  --color-cream-2: var(--tend-cream-2);
+  --color-cream-3: var(--tend-cream-3);
+  --color-section-1: var(--tend-section-1);
+  --color-section-2: var(--tend-section-2);
+  --color-section-3: var(--tend-section-3);
+
+  --spacing-xs: 8px;
+  --spacing-sm: 12px;
+  --spacing-md: 24px;
+  --spacing-lg: clamp(2rem, 1.5856rem + 1.768vw, 3rem);
+  --spacing-xl: clamp(3rem, 2.1713rem + 3.5359vw, 5rem);
+
+  --radius-sm: 10px;
+  --radius-md: 24px;
+  --radius-lg: 31px;
+  --radius-full: 9999px;
+
+  --shadow-pop: 0 8px 30px rgba(0, 0, 0, 0.45);
+  --ease-snappy: cubic-bezier(.2, .8, .2, 1);
+}
 
 :root {
-  /* ── Base palette ─────────────────────────────────────── */
-  --tend-primary:        #23b85b;  /* signal green   — primary action, status, highlights */
-  --tend-primary-press:  #1c8845;  /* darker green   — hover/pressed primary */
-  --tend-secondary:      #ffc800;  /* warm yellow    — secondary callout accent */
-  --tend-tertiary:       #565add;  /* iris violet    — decorative gradients only */
-  --tend-accent:         #dc43be;  /* hot magenta    — decorative gradients only */
-  --tend-focus:          #0099ff;  /* azure          — focus ring on inputs */
+  --tend-primary: #23b85b;
+  --tend-primary-press: #1c8845;
+  --tend-secondary: #ffc800;
+  --tend-tertiary: #565add;
+  --tend-accent: #dc43be;
+  --tend-focus: #0099ff;
 
-  /* ── Semantic — danger / overdue ──────────────────────── */
-  --tend-danger:         #ff5959;  /* base — overdue chip, alert icon, age */
-  --tend-danger-press:   #e63a3a;  /* darker — hover/pressed danger */
-  --tend-danger-soft:    rgba(255, 89, 89, 0.10);   /* tinted bg fill (overdue panel on dark) */
-  --tend-danger-softer:  rgba(255, 89, 89, 0.06);
-  --tend-danger-border:  rgba(255, 89, 89, 0.25);   /* hairline for danger panel */
-  --tend-danger-fg:      var(--tend-danger);        /* alias — readable as "danger foreground" */
+  --tend-danger: #ff5959;
+  --tend-danger-press: #e63a3a;
+  --tend-danger-soft: rgba(255, 89, 89, 0.10);
+  --tend-danger-softer: rgba(255, 89, 89, 0.06);
+  --tend-danger-border: rgba(255, 89, 89, 0.25);
 
-  /* ── Neutrals & surfaces ──────────────────────────────────
-     Tend has THREE canonical surface families that alternate to
-     create section rhythm: dark, cream, and a saturated "section
-     green" panel. Most product chrome is dark; cream is the marketing
-     workhorse; green is reserved for emphatic sections (pricing,
-     hero, final CTA).
-     ───────────────────────────────────────────────────────── */
+  --tend-dark-1: #010101;
+  --tend-dark-2: #0b0b09;
+  --tend-dark-3: rgba(255, 255, 255, 0.03);
+  --tend-dark-overlay: rgba(0, 0, 0, 0.50);
 
-  /* Dark family (app dashboard, hero, footer) */
-  --tend-dark-1:         #010101;  /* deepest canvas — page background */
-  --tend-dark-2:         #0b0b09;  /* near-black     — secondary surfaces, cards */
-  --tend-dark-3:         rgba(255, 255, 255, 0.03);  /* input fill on dark */
-  --tend-dark-overlay:   rgba(0, 0, 0, 0.50);        /* modal / form scrim */
+  --tend-cream-1: #f4f1ea;
+  --tend-cream-2: #ffffff;
+  --tend-cream-3: #ebe7dc;
 
-  /* Cream family (marketing body, light testimonials, FAQ) */
-  --tend-cream-1:        #f4f1ea;  /* page canvas — warm off-white */
-  --tend-cream-2:        #ffffff;  /* elevated card on cream */
-  --tend-cream-3:        #ebe7dc;  /* subtle inset on cream */
+  --tend-section-1: #006d29;
+  --tend-section-2: #00531f;
+  --tend-section-3: #008a36;
 
-  /* Section-green family (pricing band, hero, final CTA) */
-  --tend-section-1:      #006d29;  /* primary section panel */
-  --tend-section-2:      #00531f;  /* deeper inset on green section */
-  --tend-section-3:      #008a36;  /* lift / gradient stop */
+  --tend-on-dark-1: #ffffff;
+  --tend-on-dark-2: rgba(255, 255, 255, 0.60);
+  --tend-on-dark-3: rgba(255, 255, 255, 0.40);
+  --tend-on-cream-1: #14140f;
+  --tend-on-cream-2: rgba(20, 20, 15, 0.65);
+  --tend-on-cream-3: rgba(20, 20, 15, 0.45);
+  --tend-on-green-1: #ffffff;
+  --tend-on-green-2: rgba(255, 255, 255, 0.75);
+  --tend-on-green-3: rgba(255, 255, 255, 0.55);
 
-  /* Foreground tiers — opacity-based for both light and dark surfaces */
-  --tend-on-dark-1:      #ffffff;
-  --tend-on-dark-2:      rgba(255, 255, 255, 0.60);
-  --tend-on-dark-3:      rgba(255, 255, 255, 0.40);
-
-  --tend-on-cream-1:     #14140f;  /* near-black ink on cream */
-  --tend-on-cream-2:     rgba(20, 20, 15, 0.65);
-  --tend-on-cream-3:     rgba(20, 20, 15, 0.45);
-
-  --tend-on-green-1:     #ffffff;
-  --tend-on-green-2:     rgba(255, 255, 255, 0.75);
-  --tend-on-green-3:     rgba(255, 255, 255, 0.55);
-
-  /* Borders */
-  --tend-hairline:       rgba(255, 255, 255, 0.10);  /* on dark */
-  --tend-hairline-strong:rgba(255, 255, 255, 0.20);  /* on dark, stronger */
-  --tend-hairline-ink:   rgba(20, 20, 15, 0.10);     /* on cream */
+  --tend-hairline: rgba(255, 255, 255, 0.10);
+  --tend-hairline-strong: rgba(255, 255, 255, 0.20);
+  --tend-hairline-ink: rgba(20, 20, 15, 0.10);
   --tend-hairline-ink-strong: rgba(20, 20, 15, 0.18);
-  --tend-hairline-green: rgba(255, 255, 255, 0.18);  /* on green section */
+  --tend-hairline-green: rgba(255, 255, 255, 0.18);
 
-  /* Legacy aliases — surface defaults to DARK so existing app chrome
-     continues to render the same. Switch a region to cream/green by
-     wrapping it in `.surface-cream` / `.surface-green` (defined below). */
-  --tend-surface:        var(--tend-dark-1);
-  --tend-neutral:        var(--tend-dark-2);
-  --tend-surface-2:      var(--tend-dark-3);
-  --tend-overlay:        var(--tend-dark-overlay);
-  --tend-on-surface:     var(--tend-on-dark-1);
-  --tend-on-surface-mute:var(--tend-on-dark-2);
+  --tend-surface: var(--tend-dark-1);
+  --tend-neutral: var(--tend-dark-2);
+  --tend-surface-2: var(--tend-dark-3);
+  --tend-overlay: var(--tend-dark-overlay);
+  --tend-on-surface: var(--tend-on-dark-1);
+  --tend-on-surface-mute: var(--tend-on-dark-2);
   --tend-on-surface-dim: var(--tend-on-dark-3);
 
-  --tend-fg-1:           var(--tend-on-surface);
-  --tend-fg-2:           var(--tend-on-surface-mute);
-  --tend-fg-3:           var(--tend-on-surface-dim);
-  --tend-bg-1:           var(--tend-surface);
-  --tend-bg-2:           var(--tend-neutral);
-  --tend-bg-elevated:    var(--tend-overlay);
+  --tend-fg-1: var(--tend-on-surface);
+  --tend-fg-2: var(--tend-on-surface-mute);
+  --tend-fg-3: var(--tend-on-surface-dim);
+  --tend-bg-1: var(--tend-surface);
+  --tend-bg-2: var(--tend-neutral);
+  --tend-bg-elevated: var(--tend-overlay);
 
-  /* Surface-aware helpers — overridden inside .surface-* wrappers below. */
-  --tend-hairline-local:        var(--tend-hairline);
+  --tend-hairline-local: var(--tend-hairline);
   --tend-hairline-local-strong: var(--tend-hairline-strong);
-  --tend-tint-soft:             rgba(255, 255, 255, 0.03);
-  --tend-tint:                  rgba(255, 255, 255, 0.06);
-  --tend-tint-strong:           rgba(255, 255, 255, 0.10);
-  --tend-sidebar-bg:            #050505;
-  --tend-elevated-bg:           var(--tend-dark-2);
+  --tend-tint-soft: rgba(255, 255, 255, 0.03);
+  --tend-tint: rgba(255, 255, 255, 0.06);
+  --tend-tint-strong: rgba(255, 255, 255, 0.10);
+  --tend-sidebar-bg: #050505;
+  --tend-elevated-bg: var(--tend-dark-2);
 
-  /* ── Brand gradients (decorative artwork only) ────────── */
-  --tend-grad-forest:    linear-gradient(180deg, #00220d 0%, #008834 100%);
-  --tend-grad-vine:      linear-gradient(119.92deg, #1c8845 0%, rgba(0,0,0,1) 100%);
-  --tend-grad-bloom:     radial-gradient(134.96% 884.49% at 119.29% 112.58%, #dc43be 0%, #565add 70%);
+  --tend-grad-forest: linear-gradient(180deg, #00220d 0%, #008834 100%);
+  --tend-grad-vine: linear-gradient(119.92deg, #1c8845 0%, rgba(0,0,0,1) 100%);
+  --tend-grad-bloom: radial-gradient(134.96% 884.49% at 119.29% 112.58%, #dc43be 0%, #565add 70%);
 
-  /* ── Radii ────────────────────────────────────────────── */
-  --tend-radius-sm:      10px;     /* small utility chips, tags */
-  --tend-radius-md:      24px;     /* default cards / panels */
-  --tend-radius-lg:      31px;     /* primary CTAs, inputs */
-  --tend-radius-full:    9999px;   /* status pills, avatars */
-
-  /* ── Spacing (fixed component scale) ──────────────────── */
-  --tend-space-xs:       8px;
-  --tend-space-sm:       12px;
-  --tend-space-md:       24px;
-
-  /* ── Spacing (fluid section scale, 375 → 1280) ────────── */
-  --tend-space-lg:       clamp(2rem, 1.5856rem + 1.768vw, 3rem);   /* 32 → 48 */
-  --tend-space-xl:       clamp(3rem, 2.1713rem + 3.5359vw, 5rem);  /* 48 → 80 */
-
-  /* ── Type families ────────────────────────────────────── */
-  --tend-font-display:   "Outfit", system-ui, sans-serif;       /* headlines, big labels */
-  --tend-font-body:      "Inter",  system-ui, sans-serif;       /* UI, body, captions */
-  --tend-font-accent:    "Pixelify Sans", "Outfit", sans-serif; /* single-word emphasis */
-
-  /* ── Fluid type sizes (375 → 1280) ────────────────────── */
-  --tend-text-headline-lg: clamp(2.875rem, 2.3829rem + 2.0994vw, 4.0625rem); /* 46 → 65 */
-  --tend-text-headline-md: clamp(2.125rem, 1.7624rem + 1.547vw,  3rem);      /* 34 → 48 */
-  --tend-text-headline-sm: clamp(1.375rem, 1.116rem  + 1.105vw,  2rem);      /* 22 → 32 */
-  --tend-text-body-lg:     clamp(1.25rem,  1.1464rem + 0.442vw,  1.5rem);    /* 20 → 24 */
-  --tend-text-body-md:     clamp(0.9375rem,0.9116rem + 0.1105vw, 1rem);      /* 15 → 16 */
-  --tend-text-body-sm:     clamp(0.8125rem,0.7866rem + 0.1105vw, 0.875rem);  /* 13 → 14 */
-  --tend-text-label-lg:    clamp(1.125rem, 1.0732rem + 0.221vw,  1.25rem);   /* 18 → 20 */
-  --tend-text-label-md:    clamp(0.875rem, 0.8491rem + 0.1105vw, 0.9375rem); /* 14 → 15 */
-  --tend-text-label-sm:    clamp(0.75rem,  0.7241rem + 0.1105vw, 0.8125rem); /* 12 → 13 */
-  --tend-text-caption:     clamp(0.625rem, 0.5991rem + 0.1105vw, 0.6875rem); /* 10 → 11 */
-
-  /* ── Weights & tracking ───────────────────────────────── */
-  --tend-w-headline-lg:   800;
-  --tend-w-headline-md:   600;  --tend-track-headline-md: -0.04em;
-  --tend-w-headline-sm:   700;  --tend-track-headline-sm: -0.03em;
-  --tend-w-body-lg:       500;  --tend-track-body-lg:     -0.02em;
-  --tend-w-body-md:       500;
-  --tend-w-body-sm:       500;  --tend-track-body-sm:     -0.02em;
-  --tend-w-label-lg:      700;  --tend-track-label-lg:    -0.01em;
-  --tend-w-label-md:      600;
-  --tend-w-label-sm:      700;  --tend-track-label-sm:     0.03em;
-  --tend-w-caption:       600;  --tend-track-caption:      0.02em;
-
-  /* ── Motion ───────────────────────────────────────────── */
-  --tend-ease:           cubic-bezier(.2, .8, .2, 1);
-  --tend-duration-fast:  120ms;
-  --tend-duration:       150ms;   /* canonical */
-  --tend-duration-slow:  240ms;
-
-  /* ── Depth (used sparingly — system is mostly flat) ───── */
-  --tend-blur-panel:     blur(2px);
-  --tend-shadow-pop:     0 8px 30px rgba(0, 0, 0, 0.45);
+  --tend-duration-fast: 120ms;
+  --tend-duration: 150ms;
+  --tend-duration-slow: 240ms;
+  --tend-ease: cubic-bezier(.2, .8, .2, 1);
 }
 
-/* ============================================================
-   Semantic element defaults — opt-in via class on a wrapper
-   <div class="tend"> so this stylesheet is safe to ship next
-   to other systems without globally hijacking the page.
-   ============================================================ */
+@layer base {
+  * { box-sizing: border-box; }
 
-.tend {
-  background: var(--tend-bg-1);
-  color: var(--tend-fg-1);
-  font-family: var(--tend-font-body);
-  font-size: var(--tend-text-body-md);
-  font-weight: var(--tend-w-body-md);
-  line-height: 1.5;
-  -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
-}
+  html,
+  body {
+    @apply m-0 min-h-full;
+  }
 
-.tend h1, .tend .t-h1 {
-  font-family: var(--tend-font-display);
-  font-size: var(--tend-text-headline-lg);
-  font-weight: var(--tend-w-headline-lg);
-  line-height: 1.05;
-  letter-spacing: -0.02em;
-  text-wrap: balance;
-  margin: 0;
-}
-.tend h2, .tend .t-h2 {
-  font-family: var(--tend-font-display);
-  font-size: var(--tend-text-headline-md);
-  font-weight: var(--tend-w-headline-md);
-  letter-spacing: var(--tend-track-headline-md);
-  line-height: 1.1;
-  text-wrap: balance;
-  margin: 0;
-}
-.tend h3, .tend .t-h3 {
-  font-family: var(--tend-font-display);
-  font-size: var(--tend-text-headline-sm);
-  font-weight: var(--tend-w-headline-sm);
-  letter-spacing: var(--tend-track-headline-sm);
-  line-height: 1.2;
-  margin: 0;
-}
-.tend .t-body-lg {
-  font-family: var(--tend-font-display);
-  font-size: var(--tend-text-body-lg);
-  font-weight: var(--tend-w-body-lg);
-  letter-spacing: var(--tend-track-body-lg);
-  line-height: 1.35;
-}
-.tend p, .tend .t-body {
-  font-family: var(--tend-font-body);
-  font-size: var(--tend-text-body-md);
-  font-weight: var(--tend-w-body-md);
-  line-height: 1.5;
-  color: var(--tend-fg-2);
-  text-wrap: pretty;
-  margin: 0;
-}
-.tend small, .tend .t-body-sm {
-  font-family: var(--tend-font-body);
-  font-size: var(--tend-text-body-sm);
-  letter-spacing: var(--tend-track-body-sm);
-  color: var(--tend-fg-2);
-}
-.tend .t-label-lg {
-  font-family: var(--tend-font-display);
-  font-size: var(--tend-text-label-lg);
-  font-weight: var(--tend-w-label-lg);
-  letter-spacing: var(--tend-track-label-lg);
-}
-.tend .t-label {
-  font-family: var(--tend-font-body);
-  font-size: var(--tend-text-label-md);
-  font-weight: var(--tend-w-label-md);
-}
-.tend .t-eyebrow {
-  font-family: var(--tend-font-body);
-  font-size: var(--tend-text-label-sm);
-  font-weight: var(--tend-w-label-sm);
-  letter-spacing: var(--tend-track-label-sm);
-  text-transform: uppercase;
-  color: var(--tend-fg-2);
-}
-.tend .t-caption {
-  font-family: var(--tend-font-body);
-  font-size: var(--tend-text-caption);
-  font-weight: var(--tend-w-caption);
-  letter-spacing: var(--tend-track-caption);
-  color: var(--tend-fg-3);
-}
-.tend .t-pixel {
-  font-family: var(--tend-font-accent);
-  font-weight: 700;
-  color: var(--tend-primary);
-}
+  body {
+    @apply bg-surface text-ink font-body text-body-md antialiased;
+    text-rendering: optimizeLegibility;
+  }
 
-.tend a {
-  color: inherit;
-  text-decoration: none;
-  transition: opacity var(--tend-duration) var(--tend-ease);
+  a {
+    @apply text-inherit no-underline;
+  }
 }
-.tend a:hover { opacity: 0.7; }
-
-/* ============================================================
-   Surface modifiers — wrap a section in `.surface-cream` or
-   `.surface-green` and the semantic fg/bg variables below it
-   re-map to the appropriate values. Any component built against
-   --tend-fg-1 / --tend-bg-1 / etc. switches automatically.
-   ============================================================ */
 
 .surface-dark {
   --tend-bg-1: var(--tend-dark-1);

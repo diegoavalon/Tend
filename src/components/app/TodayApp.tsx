@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import "../../styles/app.css";
 import { TEND_DATA } from "./data";
 import { Sidebar } from "./Sidebar";
 import { TopBar } from "./TopBar";

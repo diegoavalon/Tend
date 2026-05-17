@@ -1,3 +1,4 @@
+import "../../styles/landing.css";
 import { LandingFeatures } from "./LandingFeatures";
 import { LandingFinalCTA } from "./LandingFinalCTA";
 import { LandingFooter } from "./LandingFooter";

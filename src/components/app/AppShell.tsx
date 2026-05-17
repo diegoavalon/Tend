@@ -1,4 +1,5 @@
 import { type ReactNode, useEffect, useRef, useState } from "react";
+import "../../styles/app.css";
 import { Sidebar } from "./Sidebar";
 import { NewBatchModal } from "./NewBatchModal";
 import { TEND_DATA } from "./data";

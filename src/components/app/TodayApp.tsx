@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import { TEND_DATA } from "./data";
 import { Sidebar } from "./Sidebar";
 import { TopBar } from "./TopBar";
@@ -8,41 +8,126 @@ import { ComingUpSection } from "./ComingUpSection";
 import { EmptyState } from "./EmptyState";
 import { NewBatchModal } from "./NewBatchModal";
 import { Icon } from "./Icons";
+import { TweaksPanel } from "./TweaksPanel";
 
 type Palette = "dark" | "cream";
+type Density = "compact" | "regular" | "comfy";
+
+type CounterState = "done" | "open" | "missed";
+
+type TaskRow = {
+  kind: "task";
+  id: string;
+  title: string;
+  sub: string;
+  done: boolean;
+};
+
+type ObservationRow = {
+  kind: "observation";
+  id: string;
+  title: string;
+  sub: string;
+  recorded: boolean;
+};
+
+type CounterRow = {
+  kind: "counter";
+  id: string;
+  title: string;
+  sub: string;
+  counters: { when: string; state: CounterState }[];
+};
+
+type BatchRow = TaskRow | ObservationRow | CounterRow;
+
+type BatchState = {
+  id: string;
+  name: string;
+  template: string;
+  stage: string;
+  dayInfo: string;
+  progress: number;
+  rows: BatchRow[];
+};
+
+type OverdueItem = {
+  id: string;
+  icon: string;
+  title: string;
+  batch: string;
+  age: string;
+};
+
+type NewBatchData = {
+  template: string;
+  name: string;
+  start: string;
+  params: Record<string, string | number>;
+};
+
+function cloneBatches(): BatchState[] {
+  return TEND_DATA.batches.map((batch) => ({
+    ...batch,
+    rows: batch.rows.map((row) => {
+      if (row.kind === "counter") {
+        return {
+          ...row,
+          counters: row.counters.map((counter) => ({ ...counter })),
+        };
+      }
+
+      return { ...row };
+    }),
+  }));
+}
+
+function cloneOverdue(): OverdueItem[] {
+  return TEND_DATA.overdue.map((item) => ({ ...item }));
+}
 
 export function TodayApp() {
   const [palette, setPalette] = useState<Palette>("dark");
+  const [density, setDensity] = useState<Density>("regular");
   const [showProgress, setShowProgress] = useState(true);
-  const [batches, setBatches] = useState([...TEND_DATA.batches] as any[]);
-  const [overdue, setOverdue] = useState([...TEND_DATA.overdue] as any[]);
+  const [batches, setBatches] = useState<BatchState[]>(cloneBatches);
+  const [overdue, setOverdue] = useState<OverdueItem[]>(cloneOverdue);
   const [modalOpen, setModalOpen] = useState(false);
   const [toast, setToast] = useState<string | null>(null);
+  const toastTimerRef = useRef<number | null>(null);
 
   useEffect(() => {
     document.body.className = "surface-" + palette;
     return () => { document.body.className = ""; };
   }, [palette]);
 
+  useEffect(() => () => {
+    if (toastTimerRef.current !== null) {
+      window.clearTimeout(toastTimerRef.current);
+    }
+  }, []);
+
   const flash = (msg: string) => {
     setToast(msg);
-    clearTimeout((window as any).__toast);
-    (window as any).__toast = setTimeout(() => setToast(null), 2400);
+    if (toastTimerRef.current !== null) {
+      window.clearTimeout(toastTimerRef.current);
+    }
+    toastTimerRef.current = window.setTimeout(() => setToast(null), 2400);
   };
 
   const toggleTask = (rowId: string) => {
     setBatches((bs) => bs.map((b) => ({
       ...b,
-      rows: b.rows.map((r: any) => r.id === rowId && r.kind === "task" ? { ...r, done: !r.done } : r),
+      rows: b.rows.map((r) => r.id === rowId && r.kind === "task" ? { ...r, done: !r.done } : r),
     })));
   };
 
   const tickCounter = (rowId: string, idx: number) => {
     setBatches((bs) => bs.map((b) => ({
       ...b,
-      rows: b.rows.map((r: any) => {
+      rows: b.rows.map((r) => {
         if (r.id !== rowId || r.kind !== "counter") return r;
-        const counters = r.counters.map((c: any, i: number) =>
+        const counters = r.counters.map((c, i) =>
           i === idx ? { ...c, state: c.state === "done" ? "open" : "done" } : c
         );
         return { ...r, counters };
@@ -53,7 +138,7 @@ export function TodayApp() {
   const recordObservation = (rowId: string) => {
     setBatches((bs) => bs.map((b) => ({
       ...b,
-      rows: b.rows.map((r: any) => r.id === rowId && r.kind === "observation" ? { ...r, recorded: true } : r),
+      rows: b.rows.map((r) => r.id === rowId && r.kind === "observation" ? { ...r, recorded: true } : r),
     })));
     flash("Observation recorded. Downstream events re-anchored.");
   };
@@ -63,17 +148,18 @@ export function TodayApp() {
     flash("Marked done. Removed from overdue.");
   };
 
-  const handleCreate = (data: { template: string; name: string; start: string; params: any }) => {
+  const handleCreate = (data: NewBatchData) => {
     const tpl = TEND_DATA.templates.find((t) => t.id === data.template);
-    const blank: any = {
-      id: `new-${Date.now()}`,
+    const id = `new-${Date.now()}`;
+    const blank: BatchState = {
+      id,
       name: data.name,
       template: tpl?.name ?? data.template,
       stage: "Day 1",
       dayInfo: "Day 1",
       progress: 0.02,
       rows: [
-        { kind: "task", id: `new-${Date.now()}-init`, title: "Initial setup", sub: "Anchored to batch-start", done: false },
+        { kind: "task", id: `${id}-init`, title: "Initial setup", sub: "Anchored to batch-start", done: false },
       ],
     };
     setBatches((bs) => [blank, ...bs]);
@@ -81,17 +167,18 @@ export function TodayApp() {
     flash(`Batch "${data.name}" started.`);
   };
 
-  const totalToday = batches.reduce((n: number, b: any) =>
-    n + b.rows.reduce((m: number, r: any) => {
-      if (r.kind === "task" && !r.done) return m + 1;
-      if (r.kind === "observation" && !r.recorded) return m + 1;
-      if (r.kind === "counter") return m + r.counters.filter((c: any) => c.state !== "done").length;
-      return m;
-    }, 0), 0
+  const totalToday = batches.reduce(
+    (batchTotal, batch) => batchTotal + batch.rows.reduce((rowTotal, row) => {
+      if (row.kind === "task" && !row.done) return rowTotal + 1;
+      if (row.kind === "observation" && !row.recorded) return rowTotal + 1;
+      if (row.kind === "counter") return rowTotal + row.counters.filter((counter) => counter.state !== "done").length;
+      return rowTotal;
+    }, 0),
+    0,
   );
 
   return (
-    <div className={"app surface-" + palette}>
+    <div className={`app surface-${palette} density-${density}`}>
       <Sidebar active="today" overdueCount={overdue.length} onNew={() => setModalOpen(true)} />
 
       <main className="main">
@@ -110,7 +197,7 @@ export function TodayApp() {
             <EmptyState next={{ title: "Kindling expected", batch: "Doe #1", in: "3 days" }} />
           ) : (
             <div className="batch-grid">
-              {batches.map((b: any) => (
+              {batches.map((b) => (
                 <BatchCard
                   key={b.id}
                   batch={b}
@@ -142,45 +229,14 @@ export function TodayApp() {
         </div>
       )}
 
-      {/* Palette switcher — bottom-left corner */}
-      <div style={{ position: "fixed", bottom: 20, left: 20, display: "flex", gap: 8, zIndex: 50 }}>
-        {(["dark", "cream"] as Palette[]).map((p) => (
-          <button
-            key={p}
-            onClick={() => setPalette(p)}
-            style={{
-              padding: "7px 14px",
-              borderRadius: "var(--tend-radius-full)",
-              border: "1px solid var(--tend-hairline-local-strong)",
-              background: palette === p ? "var(--tend-primary)" : "transparent",
-              color: palette === p ? "#fff" : "var(--tend-fg-2)",
-              font: "700 11px/1 var(--tend-font-body)",
-              letterSpacing: "0.06em",
-              textTransform: "uppercase",
-              cursor: "pointer",
-              transition: "background 150ms ease, color 150ms ease",
-            }}
-          >
-            {p}
-          </button>
-        ))}
-        <button
-          onClick={() => setShowProgress((v) => !v)}
-          style={{
-            padding: "7px 14px",
-            borderRadius: "var(--tend-radius-full)",
-            border: "1px solid var(--tend-hairline-local-strong)",
-            background: "transparent",
-            color: "var(--tend-fg-2)",
-            font: "700 11px/1 var(--tend-font-body)",
-            letterSpacing: "0.06em",
-            textTransform: "uppercase",
-            cursor: "pointer",
-          }}
-        >
-          {showProgress ? "Hide progress" : "Show progress"}
-        </button>
-      </div>
+      <TweaksPanel
+        palette={palette}
+        density={density}
+        showProgress={showProgress}
+        onPaletteChange={setPalette}
+        onDensityChange={setDensity}
+        onShowProgressChange={setShowProgress}
+      />
     </div>
   );
 }

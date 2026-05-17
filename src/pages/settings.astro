@@ -1,0 +1,8 @@
+---
+import { SettingsPage } from "../components/app/SettingsPage";
+import AppLayout from "../layouts/AppLayout.astro";
+---
+
+<AppLayout title="Settings — Tend">
+  <SettingsPage client:only="react" />
+</AppLayout>

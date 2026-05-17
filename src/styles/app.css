@@ -625,6 +625,157 @@ body {
 .toast .dot { width: 8px; height: 8px; border-radius: 9999px; background: var(--tend-primary); }
 @keyframes pop { from { transform: translate(-50%, 10px); opacity: 0; } to { transform: translate(-50%, 0); opacity: 1; } }
 
+/* ── Prototype tweaks panel ─────────────────────────────── */
+.tweaks-panel {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  z-index: 60;
+  width: min(280px, calc(100vw - 32px));
+  color: #14140f;
+  background: rgba(244, 241, 234, 0.84);
+  border: 1px solid rgba(255, 255, 255, 0.65);
+  border-radius: 16px;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.4) inset, 0 12px 40px rgba(0, 0, 0, 0.18);
+  backdrop-filter: blur(24px) saturate(160%);
+  -webkit-backdrop-filter: blur(24px) saturate(160%);
+}
+
+.tweaks-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px 10px;
+  border-bottom: 1px solid rgba(20, 20, 15, 0.08);
+}
+
+.tweaks-head strong {
+  font: 600 12px/1 var(--tend-font-body);
+  letter-spacing: 0.01em;
+}
+
+.tweaks-head span {
+  font: 500 11px/1 var(--tend-font-body);
+  color: rgba(20, 20, 15, 0.55);
+}
+
+.tweaks-body {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 12px 14px 14px;
+}
+
+.tweaks-section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.tweaks-section-label {
+  font: 700 10px/1 var(--tend-font-body);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(20, 20, 15, 0.5);
+}
+
+.tweaks-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.tweaks-field-inline {
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.tweaks-label-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.tweaks-label {
+  font: 500 11.5px/1.4 var(--tend-font-body);
+  color: rgba(20, 20, 15, 0.76);
+}
+
+.tweaks-value {
+  font: 500 11px/1 var(--tend-font-body);
+  color: rgba(20, 20, 15, 0.48);
+  text-transform: capitalize;
+}
+
+.tweaks-seg {
+  display: flex;
+  padding: 2px;
+  background: rgba(20, 20, 15, 0.08);
+  border-radius: 10px;
+}
+
+.tweaks-seg button {
+  flex: 1;
+  border: 0;
+  background: transparent;
+  color: rgba(20, 20, 15, 0.72);
+  border-radius: 8px;
+  padding: 7px 8px;
+  font: 600 11px/1.2 var(--tend-font-body);
+  text-transform: capitalize;
+  cursor: pointer;
+  transition: background-color var(--tend-duration) var(--tend-ease), color var(--tend-duration) var(--tend-ease);
+}
+
+.tweaks-seg button.is-active {
+  background: rgba(255, 255, 255, 0.92);
+  color: #14140f;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12);
+}
+
+.tweaks-toggle {
+  position: relative;
+  width: 34px;
+  height: 20px;
+  border: 0;
+  border-radius: 9999px;
+  background: rgba(20, 20, 15, 0.18);
+  padding: 0;
+  cursor: pointer;
+  transition: background-color var(--tend-duration) var(--tend-ease);
+}
+
+.tweaks-toggle span {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 16px;
+  height: 16px;
+  border-radius: 9999px;
+  background: #fff;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+  transition: transform var(--tend-duration) var(--tend-ease);
+}
+
+.tweaks-toggle.is-on {
+  background: var(--tend-primary);
+}
+
+.tweaks-toggle.is-on span {
+  transform: translateX(14px);
+}
+
+@media (max-width: 820px) {
+  .tweaks-panel {
+    left: 16px;
+    right: 16px;
+    width: auto;
+  }
+}
+
 /* ============================================================
    Cross-screen patterns — used by Batch detail / Settings /
    Archive / Templates. Built against surface tokens so they

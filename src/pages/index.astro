@@ -1,17 +1,8 @@
 ---
 import { TodayApp } from "../components/app/TodayApp";
+import AppLayout from "../layouts/AppLayout.astro";
 ---
 
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Tend — Today</title>
-    <link rel="stylesheet" href="/styles/tokens.css" />
-    <link rel="stylesheet" href="/styles/app.css" />
-  </head>
-  <body class="surface-dark">
-    <TodayApp client:only="react" />
-  </body>
-</html>
+<AppLayout title="Tend — Today">
+  <TodayApp client:only="react" />
+</AppLayout>

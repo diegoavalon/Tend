@@ -1,0 +1,8 @@
+---
+import { TodayApp } from "../../components/app/TodayApp";
+import AppLayout from "../../layouts/AppLayout.astro";
+---
+
+<AppLayout title="Tend — Today">
+  <TodayApp client:only="react" />
+</AppLayout>

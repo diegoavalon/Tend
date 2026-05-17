@@ -75,7 +75,7 @@ export function ArchivePage() {
             <section key={month.label} className="archive-month">
               <div className="archive-month-head">{month.label}</div>
               {visibleRows.map((row) => (
-                <a key={row.name} className="archive-row" href="/batches">
+                <a key={row.name} className="archive-row" href="/app/batches">
                   <div>
                     <div className="name">{row.name}<small>{row.template}</small></div>
                   </div>

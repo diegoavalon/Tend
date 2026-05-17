@@ -1,8 +1,5 @@
 ---
-import { TemplatesPage } from "../components/app/TemplatesPage";
-import AppLayout from "../layouts/AppLayout.astro";
+import RedirectLayout from "../layouts/RedirectLayout.astro";
 ---
 
-<AppLayout title="Templates — Tend">
-  <TemplatesPage client:only="react" />
-</AppLayout>
+<RedirectLayout target="/app/templates" title="Redirecting to Templates — Tend" />

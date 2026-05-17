@@ -4,22 +4,22 @@ const NAV_GROUPS = [
   {
     label: null,
     items: [
-      { id: "today",     label: "Today",         icon: "sun",        href: "/" },
-      { id: "batches",   label: "All batches",   icon: "layers",     href: "/batches",   count: 5 },
-      { id: "calendar",  label: "Calendar feed", icon: "calendar",   href: "/settings#feed" },
+      { id: "today",     label: "Today",         icon: "sun",        href: "/app" },
+      { id: "batches",   label: "All batches",   icon: "layers",     href: "/app/batches",   count: 5 },
+      { id: "calendar",  label: "Calendar feed", icon: "calendar",   href: "/app/settings#feed" },
     ],
   },
   {
     label: "Library",
     items: [
-      { id: "templates", label: "Templates", icon: "book-open", href: "/templates", count: 6 },
-      { id: "archive",   label: "Archive",   icon: "archive",   href: "/archive" },
+      { id: "templates", label: "Templates", icon: "book-open", href: "/app/templates", count: 6 },
+      { id: "archive",   label: "Archive",   icon: "archive",   href: "/app/archive" },
     ],
   },
   {
     label: "Account",
     items: [
-      { id: "settings", label: "Settings", icon: "settings-2", href: "/settings" },
+      { id: "settings", label: "Settings", icon: "settings-2", href: "/app/settings" },
     ],
   },
 ];
@@ -33,7 +33,7 @@ interface Props {
 export function Sidebar({ active = "today", overdueCount = 0, onNew }: Props) {
   return (
     <aside className="sidebar">
-      <a className="brand" href="/">
+      <a className="brand" href="/app">
         <Icon name="sprout" size={22} />
         <span>Tend<span className="dot">.</span></span>
       </a>

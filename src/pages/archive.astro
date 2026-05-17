@@ -1,8 +1,5 @@
 ---
-import { ArchivePage } from "../components/app/ArchivePage";
-import AppLayout from "../layouts/AppLayout.astro";
+import RedirectLayout from "../layouts/RedirectLayout.astro";
 ---
 
-<AppLayout title="Archive — Tend">
-  <ArchivePage client:only="react" />
-</AppLayout>
+<RedirectLayout target="/app/archive" title="Redirecting to Archive — Tend" />

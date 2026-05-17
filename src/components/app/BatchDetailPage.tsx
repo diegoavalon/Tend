@@ -105,7 +105,7 @@ export function BatchDetailPage() {
         <header className="screen-head">
           <div className="left">
             <div className="crumbs">
-              <a href="/">Today</a>
+              <a href="/app">Today</a>
               <Icon name="chevron-right" size={11} />
               <span style={{ color: "var(--tend-fg-3)" }}>Batches</span>
               <Icon name="chevron-right" size={11} />

@@ -1,8 +1,5 @@
 ---
-import { SettingsPage } from "../components/app/SettingsPage";
-import AppLayout from "../layouts/AppLayout.astro";
+import RedirectLayout from "../layouts/RedirectLayout.astro";
 ---
 
-<AppLayout title="Settings — Tend">
-  <SettingsPage client:only="react" />
-</AppLayout>
+<RedirectLayout target="/app/settings" title="Redirecting to Settings — Tend" />

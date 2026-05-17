@@ -1,8 +1,5 @@
 ---
-import { BatchDetailPage } from "../components/app/BatchDetailPage";
-import AppLayout from "../layouts/AppLayout.astro";
+import RedirectLayout from "../layouts/RedirectLayout.astro";
 ---
 
-<AppLayout title="Doe #4 — Tend">
-  <BatchDetailPage client:only="react" />
-</AppLayout>
+<RedirectLayout target="/app/batches" title="Redirecting to Batches — Tend" />

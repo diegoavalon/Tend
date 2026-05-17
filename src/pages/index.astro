@@ -1,8 +1,8 @@
 ---
-import { TodayApp } from "../components/app/TodayApp";
-import AppLayout from "../layouts/AppLayout.astro";
+import { LandingPage } from "../components/landing/LandingPage";
+import MarketingLayout from "../layouts/MarketingLayout.astro";
 ---
 
-<AppLayout title="Tend — Today">
-  <TodayApp client:only="react" />
-</AppLayout>
+<MarketingLayout title="Tend — One screen for everything growing on your land">
+  <LandingPage />
+</MarketingLayout>

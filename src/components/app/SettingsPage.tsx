@@ -1,8 +1,19 @@
 import { useEffect, useRef, useState } from "react";
 import { AppShell } from "./AppShell";
 import { Icon } from "./Icons";
+import { SelectField } from "../ui/SelectField";
+import { SwitchField } from "../ui/SwitchField";
 
 const FEED_URL = "https://tend.app/feed/dc5e1f1f3a4f8b9c.ics";
+const TIMEZONE_OPTIONS = [
+  { value: "America/New_York", label: "America/New_York" },
+  { value: "America/Chicago", label: "America/Chicago" },
+  { value: "America/Denver", label: "America/Denver" },
+  { value: "America/Los_Angeles", label: "America/Los_Angeles" },
+  { value: "Europe/London", label: "Europe/London" },
+  { value: "Europe/Madrid", label: "Europe/Madrid" },
+  { value: "Europe/Berlin", label: "Europe/Berlin" },
+] as const;
 
 export function SettingsPage() {
   const [timezone, setTimezone] = useState("America/New_York");
@@ -68,15 +79,13 @@ export function SettingsPage() {
                   <div className="label">Timezone</div>
                   <div className="hint">All windows and digest delivery resolve to this clock.</div>
                 </div>
-                <select className="input-flat" value={timezone} onChange={(event) => setTimezone(event.target.value)}>
-                  <option>America/New_York</option>
-                  <option>America/Chicago</option>
-                  <option>America/Denver</option>
-                  <option>America/Los_Angeles</option>
-                  <option>Europe/London</option>
-                  <option>Europe/Madrid</option>
-                  <option>Europe/Berlin</option>
-                </select>
+                <SelectField
+                  className="input-wide"
+                  name="timezone"
+                  options={TIMEZONE_OPTIONS}
+                  value={timezone}
+                  onValueChange={setTimezone}
+                />
               </div>
             </section>
 
@@ -120,14 +129,9 @@ export function SettingsPage() {
                   <div className="label">Tomorrow&apos;s heads-up</div>
                   <div className="hint">Include a short "tomorrow" section below today&apos;s list.</div>
                 </div>
-                <label className="input-flat input-toggle">
-                  <input
-                    type="checkbox"
-                    checked={tomorrowHeadsUp}
-                    onChange={(event) => setTomorrowHeadsUp(event.target.checked)}
-                  />
-                  <span>{tomorrowHeadsUp ? "On" : "Off"}</span>
-                </label>
+                <SwitchField checked={tomorrowHeadsUp} onCheckedChange={setTomorrowHeadsUp}>
+                  {tomorrowHeadsUp ? "On" : "Off"}
+                </SwitchField>
               </div>
             </section>
           </div>

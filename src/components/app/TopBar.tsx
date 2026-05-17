@@ -1,3 +1,10 @@
+import { SegmentedControl } from "../ui/SegmentedControl";
+
+const THEME_OPTIONS = [
+  { value: "dark", label: "Dark" },
+  { value: "cream", label: "Light" },
+] as const;
+
 interface Props {
   dueToday?: number;
   overdue?: number;
@@ -25,24 +32,13 @@ export function TopBar({ dueToday = 0, overdue = 0, palette, onPaletteChange }: 
       <div className="summary">
         <div className="summary-top">
           <div><strong>{overdue}</strong> overdue · <strong>{dueToday}</strong> today</div>
-          <div className="theme-switch" role="group" aria-label="Color theme">
-            <button
-              type="button"
-              className={palette === "dark" ? "is-active" : undefined}
-              aria-pressed={palette === "dark"}
-              onClick={() => onPaletteChange("dark")}
-            >
-              Dark
-            </button>
-            <button
-              type="button"
-              className={palette === "cream" ? "is-active" : undefined}
-              aria-pressed={palette === "cream"}
-              onClick={() => onPaletteChange("cream")}
-            >
-              Light
-            </button>
-          </div>
+          <SegmentedControl
+            ariaLabel="Color theme"
+            className="theme-switch"
+            options={THEME_OPTIONS}
+            value={palette}
+            onValueChange={onPaletteChange}
+          />
         </div>
         <div className="summary-note">Digest sent 07:30</div>
       </div>

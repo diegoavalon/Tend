@@ -141,18 +141,19 @@
   }
   .topbar .summary strong { @apply font-bold text-ink; }
 
-  .theme-switch {
+  .theme-switch,
+  .segmented-control {
     @apply inline-flex rounded-full border border-line bg-panel-tint-soft p-[2px];
   }
 
-  .theme-switch button {
+  .segmented-control__option {
     @apply cursor-pointer rounded-full border-0 bg-transparent px-3 py-[7px] font-body text-[11px] font-bold uppercase leading-none tracking-[0.06em] text-ink-dim;
     transition:
       background-color var(--tend-duration) var(--tend-ease),
       color var(--tend-duration) var(--tend-ease);
   }
 
-  .theme-switch button.is-active {
+  .segmented-control__option[data-checked] {
     @apply bg-panel text-ink;
   }
 
@@ -415,15 +416,24 @@
   .empty .next .accent { @apply font-bold text-primary; }
 
   .modal-backdrop {
-    @apply fixed inset-0 z-[100] flex items-start justify-center overflow-y-auto px-5 py-[clamp(20px,6vh,80px)];
+    @apply fixed inset-0 z-[100];
     background: rgba(0,0,0,0.6);
     backdrop-filter: blur(4px);
     -webkit-backdrop-filter: blur(4px);
   }
 
+  .modal-shell {
+    @apply pointer-events-none fixed inset-0 z-[110] flex items-start justify-center overflow-y-auto px-5 py-[clamp(20px,6vh,80px)];
+  }
+
   .modal {
     @apply flex w-full max-w-[520px] flex-col gap-[18px] rounded-md border border-line bg-elevated p-7;
     box-shadow: 0 30px 80px rgba(0,0,0,0.6);
+    pointer-events: auto;
+  }
+
+  .modal-form {
+    @apply flex flex-col gap-[18px];
   }
 
   .modal h2 { @apply m-0 font-display text-[26px] font-bold tracking-[-0.03em]; }
@@ -449,6 +459,7 @@
 
   .modal input,
   .modal select,
+  .select-field__trigger,
   .input-flat {
     @apply w-full rounded-lg border border-line bg-panel-tint-soft px-[18px] py-[14px] font-body text-[14px] font-medium leading-none text-ink outline-none;
     transition: border-color var(--tend-duration) var(--tend-ease);
@@ -462,7 +473,45 @@
 
   .modal input:focus,
   .modal select:focus,
+  .select-field__trigger:focus-visible,
+  .select-field__trigger[data-popup-open],
   .input-flat:focus { @apply border-focus; }
+
+  .select-field__trigger {
+    @apply flex items-center justify-between gap-2 text-left;
+  }
+
+  .select-field__icon {
+    @apply shrink-0 text-ink-dim;
+  }
+
+  .select-field__positioner {
+    @apply z-[160];
+  }
+
+  .select-field__popup {
+    @apply min-w-[var(--anchor-width)] overflow-hidden rounded-md border border-line bg-elevated p-1;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+  }
+
+  .select-field__list {
+    @apply flex max-h-[240px] flex-col gap-[2px] overflow-y-auto;
+  }
+
+  .select-field__item {
+    @apply flex cursor-pointer items-center justify-between rounded-sm px-3 py-[10px] font-body text-[13px] font-medium leading-none text-ink outline-none;
+    transition:
+      background-color var(--tend-duration) var(--tend-ease),
+      color var(--tend-duration) var(--tend-ease);
+  }
+
+  .select-field__item[data-highlighted] {
+    @apply bg-panel-tint-soft;
+  }
+
+  .select-field__item-indicator {
+    @apply ml-3 shrink-0 text-primary;
+  }
 
   .template-grid,
   .params-grid {
@@ -476,15 +525,22 @@
   }
 
   .template-pick {
-    @apply flex cursor-pointer flex-col gap-1 rounded-md border border-line bg-panel-tint-soft p-[14px] text-left text-ink;
+    @apply flex cursor-pointer items-start justify-between gap-3 rounded-md border border-line bg-panel-tint-soft p-[14px] text-left text-ink;
   }
   .template-pick:hover { @apply border-line-strong; }
+  .template-pick[data-checked],
   .template-pick.selected {
     border-color: var(--tend-primary);
     background: rgba(35,184,91,0.08);
   }
+  .template-pick-copy {
+    @apply flex min-w-0 flex-1 flex-col gap-1;
+  }
   .template-pick .name { @apply font-display text-[15px] font-bold tracking-[-0.01em]; }
   .template-pick .blurb { @apply font-body text-[11px] font-medium leading-[1.4] text-ink-dim; }
+  .template-pick-indicator {
+    @apply inline-flex size-5 shrink-0 items-center justify-center rounded-full bg-primary text-white;
+  }
 
   .modal-actions,
   .screen-head .actions,
@@ -625,6 +681,45 @@
   .input-wide { @apply min-w-[220px]; }
   .input-toggle {
     @apply inline-flex cursor-pointer items-center gap-2;
+  }
+
+  .switch-field {
+    @apply inline-flex items-center gap-2;
+  }
+
+  .switch-field__root {
+    @apply inline-flex h-7 w-12 cursor-pointer items-center rounded-full border border-line bg-panel-tint-soft p-[2px] outline-none;
+    transition:
+      background-color var(--tend-duration) var(--tend-ease),
+      border-color var(--tend-duration) var(--tend-ease);
+  }
+
+  .switch-field__root[data-checked] {
+    background: rgba(35,184,91,0.12);
+    border-color: rgba(35,184,91,0.35);
+  }
+
+  .switch-field__thumb {
+    @apply size-[21px] rounded-full bg-ink-dim;
+    transition:
+      transform var(--tend-duration) var(--tend-ease),
+      background-color var(--tend-duration) var(--tend-ease);
+  }
+
+  .switch-field__root[data-checked] .switch-field__thumb {
+    @apply bg-primary;
+    transform: translateX(19px);
+  }
+
+  .switch-field__label {
+    @apply font-body text-[11px] font-bold uppercase tracking-[0.06em] text-ink-dim;
+  }
+
+  .segmented-control__option:focus-visible,
+  .template-pick:focus-visible,
+  .switch-field__root:focus-visible {
+    outline: 2px solid var(--tend-focus);
+    outline-offset: 2px;
   }
   .btn-align-start { @apply self-start; }
   .btn-danger-secondary {
